@@ -12,8 +12,9 @@ import static art.aelaort.S3ClientProvider.client;
 public class YandexIAMSupplier {
 	private RestTemplate yandexRestTemplate;
 	private S3Params yandexS3Params;
-	private SupplierProperties properties;
 	private FuncParams funcParams;
+	private String s3File;
+	private String s3Bucket;
 
 	public String getToken() {
 		yandexRestTemplate.postForObject(
@@ -27,8 +28,8 @@ public class YandexIAMSupplier {
 	private String readRemoteToken() {
 		try (S3Client client = client(yandexS3Params)) {
 			return client.getObjectAsBytes(builder -> builder
-							.key(properties.s3File())
-							.bucket(properties.s3Bucket()))
+							.key(s3File)
+							.bucket(s3Bucket))
 					.asUtf8String();
 		}
 	}
