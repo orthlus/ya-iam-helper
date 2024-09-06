@@ -6,7 +6,7 @@
 
     <groupId>art.aelaort</groupId>
     <artifactId>ya-iam-helper</artifactId>
-    <version>2.0-SNAPSHOT</version>
+    <version>2.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -34,7 +34,7 @@
         <dependency>
             <groupId>art.aelaort</groupId>
             <artifactId>ya-func-helper</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>
