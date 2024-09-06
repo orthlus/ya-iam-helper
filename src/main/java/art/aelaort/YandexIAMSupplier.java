@@ -1,5 +1,6 @@
 package art.aelaort;
 
+import art.aelaort.ya.func.helper.FuncParams;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
@@ -12,11 +13,12 @@ public class YandexIAMSupplier {
 	private RestTemplate yandexRestTemplate;
 	private S3Params yandexS3Params;
 	private SupplierProperties properties;
+	private FuncParams funcParams;
 
 	public String getToken() {
 		yandexRestTemplate.postForObject(
-				properties.funcUrl(),
-				new HttpEntity<>(properties.funcSecret()),
+				funcParams.uri(),
+				new HttpEntity<>(funcParams.secret()),
 				String.class
 		);
 		return readRemoteToken();
