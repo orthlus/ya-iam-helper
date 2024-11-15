@@ -1,6 +1,5 @@
 package art.aelaort;
 
-import art.aelaort.ya.func.helper.FuncParams;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
@@ -11,25 +10,22 @@ import static art.aelaort.S3ClientProvider.client;
 @AllArgsConstructor
 public class YandexIAMSupplier {
 	private RestTemplate yandexRestTemplate;
-	private S3Params yandexS3Params;
-	private FuncParams funcParams;
-	private String s3File;
-	private String s3Bucket;
+	private YandexIAMConfig yandexIAMConfig;
 
 	public String getToken() {
 		yandexRestTemplate.postForObject(
-				funcParams.uri(),
-				new HttpEntity<>(funcParams.secret()),
+				yandexIAMConfig.funcUri(),
+				new HttpEntity<>(yandexIAMConfig.funcSecret()),
 				String.class
 		);
 		return readRemoteToken();
 	}
 
 	private String readRemoteToken() {
-		try (S3Client client = client(yandexS3Params)) {
+		try (S3Client client = client(yandexIAMConfig.s3Params())) {
 			return client.getObjectAsBytes(builder -> builder
-							.key(s3File)
-							.bucket(s3Bucket))
+							.key(yandexIAMConfig.s3File())
+							.bucket(yandexIAMConfig.s3Bucket()))
 					.asUtf8String();
 		}
 	}
