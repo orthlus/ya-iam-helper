@@ -14,8 +14,8 @@ public class YandexIAMSupplier {
 
 	public String getToken() {
 		yandexRestTemplate.postForObject(
-				yandexIAMConfig.funcUri(),
-				new HttpEntity<>(yandexIAMConfig.funcSecret()),
+				yandexIAMConfig.getFuncUrl(),
+				new HttpEntity<>(yandexIAMConfig.getFuncSecret()),
 				String.class
 		);
 		return readRemoteToken();
@@ -24,8 +24,8 @@ public class YandexIAMSupplier {
 	private String readRemoteToken() {
 		try (S3Client client = client(yandexIAMConfig.s3Params())) {
 			return client.getObjectAsBytes(builder -> builder
-							.key(yandexIAMConfig.s3File())
-							.bucket(yandexIAMConfig.s3Bucket()))
+							.key(yandexIAMConfig.getS3File())
+							.bucket(yandexIAMConfig.getS3Bucket()))
 					.asUtf8String();
 		}
 	}
